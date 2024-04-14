@@ -9,7 +9,8 @@
     "export": "next export",
     "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "build:icons": "tsc -b src/iconify-bundle && node src/iconify-bundle/bundle-icons-react.js"
+    "build:icons": "tsc -b src/iconify-bundle && node src/iconify-bundle/bundle-icons-react.js",
+    "yarnrun": "yarn run dev"
   },
   "eslintConfig": {
     "env": {
@@ -107,6 +108,7 @@
     "universal-cookie": "^6.1.1",
     "validator": "^13.9.0",
     "xlsx": "^0.18.5",
+    "yarn": "^1.22.22",
     "yup": "0.32.11"
   },
   "devDependencies": {
