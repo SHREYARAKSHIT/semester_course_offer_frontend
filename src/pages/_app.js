@@ -55,7 +55,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import 'src/iconify-bundle/icons-bundle-react'
 
 // ** Global css styles
-import '../../styles/globals.css'
+import '../../styles/global.css'
 
 const clientSideEmotionCache = createEmotionCache()
 

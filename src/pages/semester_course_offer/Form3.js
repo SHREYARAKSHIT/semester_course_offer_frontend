@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import styles from './styling/styles.module.css';
+
 
 const Form3 = ({ formData, onSubmit }) => {
   const [newFormData, setNewFormData] = useState({
@@ -27,7 +29,7 @@ const Form3 = ({ formData, onSubmit }) => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h2>{formData.selected_course_category && (formData.selected_course_category)}{!formData.selected_course_category && (formData.course_category)} Course Offer</h2>
       {/* Display data from Form1 */}
       {formData && (

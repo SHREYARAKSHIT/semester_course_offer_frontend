@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Post, Get } from 'src/configs/Reqmethod';
+import styles from './styling/styles.module.css';
+
 
 const Form6 = ({ formData, onSubmit }) => {
   const [twoseparatecourselist, setTwoseparatecourselist] = useState([]);
@@ -41,7 +43,7 @@ const Form6 = ({ formData, onSubmit }) => {
 
 
   return (
-    <div>
+    <div className={styles.container}>
       <h2>{formData.course_category} Course Offer</h2>
       {/* Display data from Form6 */}
       {formData && (

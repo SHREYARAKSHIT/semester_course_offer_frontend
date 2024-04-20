@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Post, Get } from 'src/configs/Reqmethod';
+import styles from './styling/styles.module.css';
+
 
 const Form1 = ({ formData, onSubmit }) => {
   const [subjectnamelist, setSubjectnamelist] = useState([]);
@@ -97,6 +99,10 @@ const Form1 = ({ formData, onSubmit }) => {
     setNewFormData({ ...newFormData, [e.target.name]: e.target.value });
   };
 
+  const handlePreChange = (e) => {
+    setNewFormData({ ...newFormData, [e.target.name]: e.target.value, prerequisite_sub_code: 'NA' });
+  };
+
   const rel1 = () => {
     formData.ur.reload();
   };
@@ -135,7 +141,7 @@ const Form1 = ({ formData, onSubmit }) => {
   };
 
   return(
-    <div>
+    <div className={styles.container}>
       <button onClick={() => rel1(formData)}>Reset</button>
       <h2>DC Course Selection</h2>
       <form onSubmit={handleSubmit}>
@@ -205,7 +211,7 @@ const Form1 = ({ formData, onSubmit }) => {
         <p></p>
         <div>
           <label for="prerequisite">Prerequisite: </label>
-          <select name="prerequisite" value={newFormData.prerequisite} onChange={handleChange} required>
+          <select name="prerequisite" value={newFormData.prerequisite} onChange={handlePreChange} required>
             <option value="">Select</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>

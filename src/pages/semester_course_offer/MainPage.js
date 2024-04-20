@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Select from 'react-select';
 import axios from 'axios';
 import { Post, Get } from 'src/configs/Reqmethod';
 import Grid from '@mui/material/Grid';
@@ -12,10 +13,9 @@ import Form7 from './Form7';
 import Form8 from './Form8';
 import Form9 from './Form9';
 import Form10 from './Form10';
+import Form11 from './Form11';
 import Modal from './Modal';
-
-
-
+import styles from './styling/styles.module.css';
 
 const MainPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -74,6 +74,7 @@ const MainPage = () => {
     else if(row.course_component==='DC/DE'){setCurrentForm(6);}
     else if(row.course_component==='DE/OE'){setCurrentForm(6);}
     else if(row.course_component==='IC'){setCurrentForm(10);}
+    else if(row.course_component==='TU'){setCurrentForm(11);}
     else {setCurrentForm(100);}
   };
 
@@ -145,6 +146,59 @@ const MainPage = () => {
     }
   };
 
+  const plusCourse = (data) => {
+    if(data.sub_category.startsWith('OE')){
+      if(data.sub_category==data.sequence){
+        setFormData({ ...formData, course_component: data.course_component, course_category: data.sequence, no_of_OE:1});
+        setInputData({ ...inputData, course_component: data.course_component, course_category: data.sequence});
+        setNo_of_com(1);
+      }else{
+        setFormData({ ...formData, course_component: data.course_component, course_category: data.sequence, no_of_OE:1, selected_course_category:data.sub_category});
+        setInputData({ ...inputData, course_component: data.course_component, course_category: data.sequence});
+        setNo_of_com(1);
+        setSelected_course_category(data.sub_category);
+      }
+      setCurrentForm(8);
+    }
+    else if(data.sub_category.startsWith('DE')){
+      if(data.sub_category==data.sequence){
+        setFormData({ ...formData, course_component: data.course_component, course_category: data.sequence, no_of_DE:1});
+        setInputData({ ...inputData, course_component: data.course_component, course_category: data.sequence});
+        setNo_of_com(1);
+      }else{
+        setFormData({ ...formData, course_component: data.course_component, course_category: data.sequence, no_of_DE:1, selected_course_category:data.sub_category});
+        setInputData({ ...inputData, course_component: data.course_component, course_category: data.sequence});
+        setNo_of_com(1);
+        setSelected_course_category(data.sub_category);
+      }
+      setCurrentForm(7);
+    }
+    else if(data.sub_category.startsWith('ESO')){
+      if(data.sub_category==data.sequence){
+        setFormData({ ...formData, course_component: data.course_component, course_category: data.sequence, no_of_ESO:1});
+        setInputData({ ...inputData, course_component: data.course_component, course_category: data.sequence});
+        setNo_of_com(1);
+      }else{
+        setFormData({ ...formData, course_component: data.course_component, course_category: data.sequence, no_of_ESO:1, selected_course_category:data.sub_category});
+        setInputData({ ...inputData, course_component: data.course_component, course_category: data.sequence});
+        setNo_of_com(1);
+        setSelected_course_category(data.sub_category);
+      }
+      setCurrentForm(9);
+    }
+  }
+
+  const modalsub = () => {
+      setFormData(inputData);
+      setResponse(false);
+      setApiData(null);
+      setNo_of_com(0);
+      setSelected_course_category(null);
+      setCurrentForm(0);
+      setModalOpen(false);
+  };
+  
+
   const handleSubmit = () => {
     //window.location.reload(); // Reload the page
     setFormData(inputData);
@@ -160,6 +214,25 @@ const MainPage = () => {
     try {
       await Post('sub1',{data1,data2}).then(async sub1=>{
             console.log(sub1.data.data);
+            setFormData(inputData);
+            setResponse(false);
+            setApiData(null);
+            setCurrentForm(0);
+            setNo_of_com(0);
+            setSelected_course_category(null);
+            setModalOpen(false);
+            window.alert('Course offered successfully!');
+      });
+  } catch (error) {
+    console.error('Error:', error);
+    window.alert('Error!');
+  }
+  };
+
+  const handleSubmit11 = async (data1,data2) => {
+    try {
+      await Post('sub11',{data1,data2}).then(async sub11=>{
+            console.log(sub11.data.data);
             setFormData(inputData);
             setResponse(false);
             setApiData(null);
@@ -423,7 +496,7 @@ const MainPage = () => {
     switch (currentForm) {
       case 0:
         return (
-          <div>
+          <div className={styles.container}>
             <button onClick={() => handleReload()}>Reset</button>
             <h2>Semester Course Offer</h2>
             <select name="session_year" value={inputData.session_year} onChange={handleInputChangesesyr} required>
@@ -499,8 +572,9 @@ const MainPage = () => {
                     <th>Subject Category</th>
                     <th>Subject Code</th>
                     <th>Subject Name</th>
-                    <th>Action1</th>
-                    <th>Action2</th>
+                    <th>Action 1</th>
+                    <th>Action 2</th>
+                    <th>Action 3</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -516,6 +590,12 @@ const MainPage = () => {
                     {!row.offer_condition &&(<td></td>)}
                     {!row.offer_condition &&(<td><button onClick={() => handleFormSubmit(row)}>Add Course</button></td>)}
                     {row.offer_condition &&(<td><button onClick={() => handleSubDelete(row)}>Remove Course</button></td>)}
+                    {(row.sub_category.startsWith('OE')||row.sub_category.startsWith('DE')||row.sub_category.startsWith('ESO'))&&(
+                      <td><button onClick={() => plusCourse(row)}>+</button></td>
+                    )}
+                    {!(row.sub_category.startsWith('OE')||row.sub_category.startsWith('DE')||row.sub_category.startsWith('ESO'))&&(
+                      <td></td>
+                    )}
                   </tr>
                 ))}
                 </tbody>
@@ -527,7 +607,7 @@ const MainPage = () => {
                 No course is found.
               </div>
             )}
-            {modalOpen && <Modal onClose={() => setModalOpen(false)} data={modalData} />}
+            {modalOpen && <Modal onClose={() => setModalOpen(false)} data={modalData} onDelete={modalsub}/>}
           </div>
         );
       case 1:
@@ -550,6 +630,8 @@ const MainPage = () => {
         return <Form9 formData={formData} onSubmit={handleSubmit9} />;
       case 10:
         return <Form10 formData={formData} onSubmit={handleSubmit10} />;
+      case 11:
+        return <Form11 formData={formData} onSubmit={handleSubmit11} />;
       default:
         return (
           <button onClick={() => handleReload()}>Go to Main Page</button>

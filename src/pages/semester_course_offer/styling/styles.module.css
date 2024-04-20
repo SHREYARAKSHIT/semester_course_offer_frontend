@@ -1,0 +1,63 @@
+/*new content*/
+
+.container table{
+    /*border: 1px solid black;*/
+    text-align: center;
+    border-collapse: collapse;
+    background-color: white;
+    width: 100%;
+}
+.container tr{
+    border-bottom: 1px solid #f2f2f7;
+  }
+.container th{
+    /*border: 1px solid #ccc;*/
+    padding: 8px;
+    background-color: #f2f2f7;
+    text-align: center;
+    /*font-weight: bold;*/
+  }
+.container td{
+    /*border: 1px solid #ccc;*/
+    background-color: white;
+    padding: 8px;
+    text-align: center;
+  }
+  
+.container button {
+    padding: 6px 12px;
+    margin: 4px;
+    border: none;
+    border-radius: 50px;
+    background-color: #8142f5;/*#9d5ae6;*//*#007bff;*/
+    color: #fff;
+    cursor: pointer;
+  }
+.container  button:hover {
+    background-color: #0056b3;
+  }
+.container input[type="text"],
+.container input[type="email"],
+.container input[type="password"],
+.container input[type="number"],
+.container input[type="date"],
+.container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+    margin-bottom: 10px;
+    margin-right: 10px;
+    max-width: 300px;
+  }
+  
+  /* Style for select elements */
+.container select {
+    appearance: none; /* Remove default select arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%237481a3"><path fill-rule="evenodd" d="M10 12.586L6.707 9.293a1 1 0 011.414-1.414l2.829 2.828a1 1 0 01-.001 1.415l-2.829 2.829a1 1 0 01-1.414-1.415L10 12.587z" clip-rule="evenodd"></path></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px; /* Ensure space for the custom arrow */
+    max-width: 200px;
+  }

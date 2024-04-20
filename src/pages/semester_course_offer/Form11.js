@@ -3,7 +3,7 @@ import { Post, Get } from 'src/configs/Reqmethod';
 import styles from './styling/styles.module.css';
 
 
-const Form7 = ({ formData, onSubmit }) => {
+const Form11 = ({ formData, onSubmit }) => {
   const [subjectnamelist, setSubjectnamelist] = useState([]);
   const [introsesyear, setIntrosesyear] = useState([]);
   const [deptoffacultylist, setDeptoffacultylist] = useState([]);
@@ -69,7 +69,6 @@ const Form7 = ({ formData, onSubmit }) => {
       remarks: '',
       ...formData, // Include data from Form1
     });
-    setTableData([{...tableDataFormat, marks_upload_right:"1"}]);
     const handlesubname = async () => {
       try{
         await Post('getsubname',{department: formData.department}).then(async subnamelis=>{
@@ -100,7 +99,11 @@ const Form7 = ({ formData, onSubmit }) => {
     setNewFormData({ ...newFormData, [e.target.name]: e.target.value });
   };
 
-  const rel7 = () => {
+  const handlePreChange = (e) => {
+    setNewFormData({ ...newFormData, [e.target.name]: e.target.value, prerequisite_sub_code: 'NA' });
+  };
+
+  const rel11 = () => {
     formData.ur.reload();
   };
 
@@ -116,7 +119,7 @@ const Form7 = ({ formData, onSubmit }) => {
     //setNewFormData({...newFormData, [e.target.name]:e.target.value});
     setNewFormData({...newFormData, [e.target.name]:e.target.value, introduced_session_year:'', subject_code: '' , introduced_session: '', lecture: '', tutorial: '', practical: '', credit_hours: '', contact_hours: '', subject_type: ''})
     try{
-      const selectedOption = subjectnamelist.find((row) => row.sub_name === e.target.value);
+      const selectedOption = subjectnamelist.find((row) => row.sub_name === e.target.value && row.sub_code===e.target.options[e.target.selectedIndex].id);
       if(selectedOption){await Post('getsubdetail',{department: formData.department, subject_name: e.target.value,  subject_code: selectedOption.sub_code}).then(async subdetlis=>{
         console.log(subdetlis.data.data);
         setIntrosesyear(subdetlis.data.data);
@@ -130,10 +133,6 @@ const Form7 = ({ formData, onSubmit }) => {
     }
   };
 
-  const handlePreChange = (e) => {
-    setNewFormData({ ...newFormData, [e.target.name]: e.target.value, prerequisite_sub_code: 'NA' });
-  };
-
   const handleChangeisy= (e) => {
     const selectedOption = introsesyear.find((row) => row.wef_year === e.target.value);
     if(selectedOption){
@@ -143,8 +142,8 @@ const Form7 = ({ formData, onSubmit }) => {
 
   return(
     <div className={styles.container}>
-      <button onClick={() => rel7(formData)}>Reset</button>
-      <h2>DE Course Selection</h2>
+      <button onClick={() => rel11(formData)}>Reset</button>
+      <h2>TU Course Selection</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label for="session_year">Session Year: </label>
@@ -176,7 +175,7 @@ const Form7 = ({ formData, onSubmit }) => {
           <select name="subject_name" value={newFormData.subject_name} onChange={handleChangesn} required>
             <option value="">Select Subject</option>
             {subjectnamelist.map((row) => (
-                <option value={row.sub_name}>{row.sub_name} ({row.sub_code})</option> 
+                <option value={row.sub_name} id={row.sub_code}>{row.sub_name} ({row.sub_code})</option> 
             ))}
           </select>
           <label for="introduced_session_year">Introduced Session Year: </label>
@@ -321,4 +320,4 @@ const Form7 = ({ formData, onSubmit }) => {
   );
 };
 
-export default Form7;
+export default Form11;

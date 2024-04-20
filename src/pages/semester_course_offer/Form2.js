@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Post, Get } from 'src/configs/Reqmethod';
+import styles from './styling/styles.module.css';
+
 
 const Form2 = ({ formData, onSubmit }) => {
   const [subjectnamelist, setSubjectnamelist] = useState([]);
@@ -127,6 +129,10 @@ const Form2 = ({ formData, onSubmit }) => {
     }
   };
 
+  const handlePreChange = (e) => {
+    setNewFormData({ ...newFormData, [e.target.name]: e.target.value, prerequisite_sub_code: 'NA' });
+  };
+
   const handleChangeisy= (e) => {
     const selectedOption = introsesyear.find((row) => row.wef_year === e.target.value);
     if(selectedOption){
@@ -135,33 +141,33 @@ const Form2 = ({ formData, onSubmit }) => {
   };
 
   return(
-    <div>
+    <div className={styles.container}>
       <button onClick={() => rel2(formData)}>Reset</button>
       <h2>DP Course Selection</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label for="session_year">Session Year: </label>
-          <input type="text" name="session_year" value={formData.session_year} disabled/>
+          <input type="text" id="session_year" name="session_year" value={formData.session_year} disabled/>
           <label for="session">Session: </label>
-          <input type="text" name="session" value={formData.session} disabled/>
+          <input type="text" id="session" name="session" value={formData.session} disabled/>
           <label for="course">Course: </label>
-          <input type="text" name="course" value={formData.course} disabled/>
+          <input type="text" id="course" name="course" value={formData.course} disabled/>
         </div>
         <div>
           <label for="branch">Branch: </label>
-          <input type="text" name="branch" value={formData.branch} disabled/>
+          <input type="text" id="branch" name="branch" value={formData.branch} disabled/>
           <label for="department">Department: </label>
-          <input type="text" name="department" value={formData.department} disabled/>
+          <input type="text" id="department" name="department" value={formData.department} disabled/>
           <label for="semester">Semester: </label>
-          <input type="text" name="semester" value={formData.semester} disabled/>
+          <input type="text" id="semester" name="semester" value={formData.semester} disabled/>
         </div>
         <div>
           <label for="batch">Batch: </label>
-          <input type="text" name="batch" value={formData.batch} disabled/>
+          <input type="text" id="batch" name="batch" value={formData.batch} disabled/>
           <label for="course_component">Course Component: </label>
-          <input type="text" name="course_component" value={formData.course_component} disabled/>
+          <input type="text" id="course_component" name="course_component" value={formData.course_component} disabled/>
           <label for="course_category">Course Category: </label>
-          <input type="text" name="course_category" value={formData.course_category} disabled/>
+          <input type="text" id="course_category" name="course_category" value={formData.course_category} disabled/>
         </div>
         <p></p>
         <div>
@@ -205,7 +211,7 @@ const Form2 = ({ formData, onSubmit }) => {
         <p></p>
         <div>
           <label for="prerequisite">Prerequisite: </label>
-          <select name="prerequisite" value={newFormData.prerequisite} onChange={handleChange} required>
+          <select name="prerequisite" value={newFormData.prerequisite} onChange={handlePreChange} required>
             <option value="">Select</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
